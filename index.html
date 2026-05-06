@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stablecoin Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#1a2332;--navy2:#243044;--navy3:#2d3e50;
+  --gold:#c9a961;--gold2:#e0c882;
+  --bg:#0f1923;--card:#1a2332;
+  --text:#e0e0e0;--text2:#999;--text3:#666;
+  --green:#4caf50;--red:#ef5350;--yellow:#ffc107;
+  --blue:#42a5f5;
+  --border:#2d3e50;
+}
+body{font-family:-apple-system,'PingFang SC','Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+a{color:var(--gold);text-decoration:none}
+
+/* Header */
+.header{background:var(--navy);border-bottom:2px solid var(--gold);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.header h1{font-size:18px;color:var(--gold);font-weight:600;letter-spacing:1px}
+.header .meta{font-size:12px;color:var(--text2)}
+.header .meta span{margin-left:12px}
+.status{display:inline-flex;align-items:center;gap:4px}
+.status .dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* Tabs */
+.tabs{display:flex;background:var(--navy);border-bottom:1px solid var(--border);padding:0 24px;overflow-x:auto}
+.tab{padding:12px 20px;font-size:13px;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:.2s}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* Layout */
+.content{max-width:1400px;margin:0 auto;padding:20px}
+.panel{display:none}
+.panel.active{display:block}
+
+/* KPI row */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;text-align:center}
+.kpi .label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
+.kpi .value{font-size:22px;font-weight:700;color:var(--gold);margin-top:4px;font-family:'SF Mono',Menlo,monospace}
+.kpi .sub{font-size:11px;color:var(--text3);margin-top:2px}
+
+/* Table */
+.table-wrap{overflow-x:auto;margin-bottom:20px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{background:var(--navy3);color:var(--gold2);padding:10px 12px;text-align:left;font-weight:600;font-size:12px;white-space:nowrap;position:sticky;top:0;border-bottom:2px solid var(--gold)}
+tbody tr{border-bottom:1px solid var(--border);transition:.15s}
+tbody tr:hover{background:var(--navy2)}
+td{padding:10px 12px;vertical-align:middle}
+td.num{font-family:'SF Mono',Menlo,monospace;text-align:right;white-space:nowrap}
+td.center{text-align:center}
+.pos{color:var(--green)}
+.neg{color:var(--red)}
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.tag-green{background:rgba(76,175,80,.15);color:var(--green)}
+.tag-red{background:rgba(239,83,80,.15);color:var(--red)}
+.tag-yellow{background:rgba(255,193,7,.15);color:var(--yellow)}
+.tag-blue{background:rgba(66,165,245,.15);color:var(--blue)}
+
+/* Section */
+.section{margin-bottom:24px}
+.section-title{font-size:14px;font-weight:600;color:var(--gold);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.section-title::before{content:'';width:3px;height:16px;background:var(--gold);border-radius:2px}
+
+/* Card grid */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;margin-bottom:20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;transition:.2s}
+.card:hover{border-color:var(--gold)}
+.card h3{font-size:13px;color:var(--gold);margin-bottom:10px}
+.card p{font-size:12px;color:var(--text2);line-height:1.6}
+
+/* Insight box */
+.insight{background:var(--navy2);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:20px;font-size:13px;line-height:1.8}
+
+/* Rate bar */
+.rate-bar{display:flex;align-items:center;gap:8px;margin:4px 0}
+.rate-bar .bar{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.rate-bar .bar-fill{height:100%;border-radius:3px;transition:.5s}
+.rate-bar .rate-label{font-size:11px;color:var(--text2);width:40px}
+.rate-bar .rate-val{font-size:12px;font-family:monospace;width:50px;text-align:right}
+
+/* Timeline */
+.timeline-item{display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--border)}
+.timeline-item:last-child{border-bottom:none}
+.tl-date{min-width:90px;font-size:12px;color:var(--gold);font-family:monospace;padding-top:2px}
+.tl-body h4{font-size:13px;color:var(--text);margin-bottom:4px}
+.tl-body p{font-size:12px;color:var(--text2)}
+.tl-tag{margin-left:8px;font-size:10px;vertical-align:middle}
+
+/* Compare */
+.compare-row{display:grid;grid-template-columns:180px 1fr 1fr 80px;gap:1px;background:var(--border);margin-bottom:1px}
+.compare-row>div{background:var(--card);padding:10px 12px;font-size:12px}
+.compare-row.header>div{background:var(--navy3);color:var(--gold2);font-weight:600;font-size:11px}
+.compare-row .dim{color:var(--gold);font-weight:600}
+.winner-usdc{color:var(--green);font-weight:700;text-align:center}
+.winner-usdt{color:var(--red);font-weight:700;text-align:center}
+.winner-tie{color:var(--yellow);font-weight:700;text-align:center}
+
+/* Loading */
+.loading{text-align:center;padding:60px;color:var(--text2)}
+.loading .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Footer */
+.footer{text-align:center;padding:20px;font-size:11px;color:var(--text3);border-top:1px solid var(--border);margin-top:40px}
+
+@media(max-width:768px){
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+  .compare-row{grid-template-columns:1fr}
+  .header{flex-direction:column;gap:8px}
+  .content{padding:12px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>STABLECOIN DASHBOARD</h1>
+  <div class="meta">
+    <span class="status"><span class="dot"></span> LIVE</span>
+    <span id="update-time">Loading...</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" data-tab="overview">核心仪表盘</div>
+  <div class="tab" data-tab="rates">利率与收入测算</div>
+  <div class="tab" data-tab="compare">CRCL vs USDT</div>
+  <div class="tab" data-tab="timeline">事件时间表</div>
+  <div class="tab" data-tab="sources">数据源</div>
+</div>
+
+<div class="content">
+
+<!-- ============ Tab 1: Overview ============ -->
+<div class="panel active" id="panel-overview">
+  <div class="kpi-row" id="kpi-row">
+    <div class="kpi"><div class="label">总发行量 (Top 7)</div><div class="value" id="kpi-total">—</div></div>
+    <div class="kpi"><div class="label">USDT 占比</div><div class="value" id="kpi-usdt-share">—</div></div>
+    <div class="kpi"><div class="label">USDC 占比</div><div class="value" id="kpi-usdc-share">—</div></div>
+    <div class="kpi"><div class="label">HHI 集中度</div><div class="value" id="kpi-hhi">—</div></div>
+    <div class="kpi"><div class="label">Fed Funds Rate</div><div class="value">3.50-3.75%</div><div class="sub">FOMC 4/29 Hold</div></div>
+    <div class="kpi"><div class="label">3M T-Bill</div><div class="value">3.70%</div><div class="sub">H.15 5/4/2026</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">稳定币发行量排名 ($1B+)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>#</th><th>名称</th><th>发行量</th><th>价格</th>
+          <th>1D</th><th>7D</th><th>30D</th><th>市场份额</th><th>类型</th>
+        </tr></thead>
+        <tbody id="stable-table"><tr><td colspan="9"><div class="loading"><div class="spinner"></div>从 DefiLlama 加载中...</div></td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="insight" id="insight-box">加载数据后自动生成趋势分析...</div>
+
+  <div class="section">
+    <div class="section-title">USDC 季度趋势</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>季度</th><th>期末($B)</th><th>环比</th><th>环比%</th><th>备注</th></tr></thead>
+        <tbody>
+          <tr><td>Q1'25</td><td class="num">43.0</td><td class="num">—</td><td class="num">—</td><td>IPO前低基数</td></tr>
+          <tr><td>Q2'25</td><td class="num">57.5</td><td class="num pos">+14.5B</td><td class="num pos">+33.7%</td><td>IPO + GENIUS Act签署</td></tr>
+          <tr><td>Q3'25</td><td class="num">66.2</td><td class="num pos">+8.7B</td><td class="num pos">+15.1%</td><td>机构资金入场</td></tr>
+          <tr><td>Q4'25</td><td class="num">75.3</td><td class="num pos">+9.1B</td><td class="num pos">+13.7%</td><td>牛市 + Coinbase推广</td></tr>
+          <tr><td>Q1'26E</td><td class="num" id="usdc-q1">~78</td><td class="num pos">+2.7B</td><td class="num pos">+3.6%</td><td>增速显著放缓; Meta USDC上线</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Tab 2: Rates ============ -->
+<div class="panel" id="panel-rates">
+  <div class="section">
+    <div class="section-title">美国国债收益率曲线 (5/4/2026)</div>
+    <div id="yield-curve" style="padding:8px 0"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">FOMC 利率展望 (CME FedWatch)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>会议</th><th>日期</th><th>维持</th><th>降25bp</th><th>降50bp</th><th>加25bp</th><th>共识</th></tr></thead>
+        <tbody>
+          <tr><td>5月FOMC</td><td>5/6-7</td><td class="num">95.9%</td><td class="num">4.1%</td><td class="num">—</td><td class="num">—</td><td>维持</td></tr>
+          <tr><td>6月FOMC</td><td>6/16-17</td><td class="num">89.2%</td><td class="num">7.0%</td><td class="num">—</td><td class="num">3.8%</td><td>维持 (加息声音!)</td></tr>
+          <tr><td>9月FOMC</td><td>9/15-16</td><td class="num">~60%</td><td class="num">~30%</td><td class="num">~8%</td><td class="num">~2%</td><td>大概率维持</td></tr>
+          <tr><td>12月FOMC</td><td>12/14-15</td><td class="num">51.3%</td><td class="num">35.7%</td><td class="num">9.5%</td><td class="num">3.5%</td><td>略偏维持</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight">全年最多降1次25bp | Dot plot中位数指向仅1次降息 | Iran和平谈判若成功 → 油价降 → 通胀降 → 降息加速</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Circle 储备收入敏感度</div>
+    <div class="insight" style="border-left-color:var(--blue)">
+      核心公式: 年化储备收入 = USDC发行量 x 储备收益率 x RLDC(40%)<br>
+      储备组合: ~80% 短期美国国债 + ~20% 现金/回购 → 加权收益率 ≈ 3M T-Bill - 15bp
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>情景</th><th>Fed Funds</th><th>3M T-Bill</th><th>USDC($B)</th><th>毛收入($M)</th><th>RLDC</th><th>净收入($M)</th><th>vs当前</th><th>概率</th></tr></thead>
+        <tbody>
+          <tr><td>当前基准</td><td class="num">3.50-3.75%</td><td class="num">3.70%</td><td class="num">78</td><td class="num">2,769</td><td class="center">40%</td><td class="num">1,108</td><td class="center tag tag-yellow">—</td><td class="center">52%</td></tr>
+          <tr><td>降1次</td><td class="num">3.25-3.50%</td><td class="num">3.45%</td><td class="num">82</td><td class="num">2,706</td><td class="center">40%</td><td class="num">1,082</td><td class="center tag tag-red">-2.3%</td><td class="center">36%</td></tr>
+          <tr><td>降2次(鸽)</td><td class="num">3.00-3.25%</td><td class="num">3.20%</td><td class="num">85</td><td class="num">2,593</td><td class="center">40%</td><td class="num">1,037</td><td class="center tag tag-red">-6.4%</td><td class="center">10%</td></tr>
+          <tr><td>加1次(鹰)</td><td class="num">3.75-4.00%</td><td class="num">3.95%</td><td class="num">76</td><td class="num">2,888</td><td class="center">40%</td><td class="num">1,155</td><td class="center tag tag-green">+4.2%</td><td class="center">4%</td></tr>
+          <tr><td>降4次(极鸽)</td><td class="num">2.50-2.75%</td><td class="num">2.70%</td><td class="num">90</td><td class="num">2,295</td><td class="center">40%</td><td class="num">918</td><td class="center tag tag-red">-17.1%</td><td class="center">&lt;1%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">各发行方年化收入估算</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>发行方</th><th>稳定币</th><th>发行量($B)</th><th>储备类型</th><th>估计收益率</th><th>毛收入($M)</th><th>分销成本</th><th>净收入($M)</th><th>备注</th></tr></thead>
+        <tbody>
+          <tr><td>Tether</td><td>USDT</td><td class="num">189.5</td><td>国债+黄金+BTC</td><td class="num">~3.8%</td><td class="num">7,201</td><td class="num">&lt;5%</td><td class="num pos">6,841</td><td>员工~100; 2025利润$130亿</td></tr>
+          <tr><td>Circle</td><td>USDC</td><td class="num">78.3</td><td>短期国债+现金</td><td class="num">3.55%</td><td class="num">2,778</td><td class="num">~60%</td><td class="num">1,111</td><td>RLDC 40%; Coinbase拿50%+</td></tr>
+          <tr><td>Sky/Maker</td><td>USDS+DAI</td><td class="num">13.4</td><td>USDC+RWA+ETH</td><td class="num">~4.5%</td><td class="num">602</td><td class="num">~30%</td><td class="num">421</td><td>DSR 5%; RWA yield较高</td></tr>
+          <tr><td>Ethena</td><td>USDe</td><td class="num">3.9</td><td>ETH质押+空头</td><td class="num">~12%</td><td class="num">468</td><td class="num">~50%</td><td class="num">234</td><td>Funding rate驱动, 非国债</td></tr>
+          <tr><td>Paxos/PayPal</td><td>PYUSD</td><td class="num">3.4</td><td>短期国债</td><td class="num">~3.6%</td><td class="num">122</td><td class="num">~40%</td><td class="num">73</td><td>PayPal拿大头; 发行量下滑</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight">
+      Tether人均产出是Circle的42倍 — Coinbase分销成本是最大利润吞噬者<br>
+      利率每降100bp, Circle年化收入减少~$780M (-28%) — 高度利率敏感<br>
+      Coinbase 8月续约是Circle 2026最大单一风险 — 当前50%分成占RLDC 60%
+    </div>
+  </div>
+</div>
+
+<!-- ============ Tab 3: Compare ============ -->
+<div class="panel" id="panel-compare">
+  <div class="section">
+    <div class="section-title">Circle (CRCL) vs Tether (USDT) — 15维度对比</div>
+    <div id="compare-table"></div>
+  </div>
+  <div class="insight" style="border-left-color:var(--blue)">
+    <strong>结论:</strong> Tether在规模、利润、效率碾压Circle。但Circle是唯一合规+上市+透明的纯稳定币标的。<br>
+    <strong>投资逻辑:</strong> 信'合规溢价'→做多CRCL | 信'网络效应不可逆'→USDT仍赢<br>
+    <strong>关键变量:</strong> Coinbase续约(8月) + CLARITY Act最终版 + Fed降息节奏<br>
+    <strong>风险:</strong> CRCL估值$23B = ~22x收入 / ~50x净利润 — 已price in大量乐观预期
+  </div>
+</div>
+
+<!-- ============ Tab 4: Timeline ============ -->
+<div class="panel" id="panel-timeline">
+  <div class="section">
+    <div class="section-title">行业重大事件时间表</div>
+    <div id="timeline-list"></div>
+  </div>
+</div>
+
+<!-- ============ Tab 5: Sources ============ -->
+<div class="panel" id="panel-sources">
+  <div class="section">
+    <div class="section-title">数据源 (全部免费/公开)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>类别</th><th>数据源</th><th>API/URL</th><th>频率</th><th>备注</th></tr></thead>
+        <tbody>
+          <tr><td>稳定币发行量</td><td>DefiLlama</td><td><a href="https://stablecoins.llama.fi/stablecoins?includePrices=true" target="_blank">stablecoins API</a></td><td>实时</td><td>本页面实时拉取</td></tr>
+          <tr><td>国债收益率</td><td>Fed H.15</td><td><a href="https://www.federalreserve.gov/releases/h15/" target="_blank">H.15 Release</a></td><td>每日</td><td>1M~30Y完整曲线</td></tr>
+          <tr><td>FRED利率</td><td>FRED</td><td><a href="https://fred.stlouisfed.org/series/DGS3MO" target="_blank">DGS3MO</a></td><td>每日</td><td>3M/6M/1Y T-Bill</td></tr>
+          <tr><td>CRCL股价</td><td>Yahoo Finance</td><td>finance.yahoo.com/quote/CRCL</td><td>实时</td><td>盘中+盘后</td></tr>
+          <tr><td>分析师共识</td><td>TipRanks</td><td>tipranks.com/stocks/crcl</td><td>每日</td><td>目标价+评级</td></tr>
+          <tr><td>内部人交易</td><td>SEC EDGAR</td><td>Form 144/Form 4</td><td>事件</td><td>减持记录</td></tr>
+          <tr><td>利率预期</td><td>CME FedWatch</td><td><a href="https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html" target="_blank">FedWatch</a></td><td>实时</td><td>FOMC概率</td></tr>
+          <tr><td>立法概率</td><td>Polymarket</td><td>polymarket.com</td><td>实时</td><td>CLARITY Act</td></tr>
+          <tr><td>Circle IR</td><td>Circle</td><td><a href="https://investors.circle.com" target="_blank">investors.circle.com</a></td><td>季度</td><td>10-K/10-Q/8-K</td></tr>
+          <tr><td>Tether透明度</td><td>Tether</td><td><a href="https://tether.to/en/transparency" target="_blank">tether.to</a></td><td>季度</td><td>储备组成</td></tr>
+          <tr><td>价格交叉验证</td><td>CoinGecko</td><td><a href="https://www.coingecko.com/en/coins/usdc" target="_blank">CoinGecko USDC</a></td><td>实时</td><td>历史CSV可下载</td></tr>
+          <tr><td>价格交叉验证</td><td>CoinMarketCap</td><td>coinmarketcap.com</td><td>实时</td><td>发行量验证</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight">
+      本页面直接调用 DefiLlama 公开 API, 每次打开自动刷新。<br>
+      利率和事件数据需手动更新 (或让 Claude 用 WebFetch 抓取后更新 JS)。
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  STABLECOIN DASHBOARD | Data: DefiLlama + Fed H.15 + CME | For Research Only
+</div>
+
+<script>
+// ── Tab switching ──
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ── Stablecoin config ──
+const TRACKED = {
+  1:   { name: 'Tether', ticker: 'USDT', type: '法币储备' },
+  2:   { name: 'USD Coin', ticker: 'USDC', type: '法币储备' },
+  209: { name: 'Sky Dollar', ticker: 'USDS', type: '超额抵押' },
+  5:   { name: 'Dai', ticker: 'DAI', type: '超额抵押' },
+  262: { name: 'USD1', ticker: 'USD1', type: '法币储备' },
+  146: { name: 'USDe', ticker: 'USDe', type: '合成锚定' },
+  120: { name: 'PayPal USD', ticker: 'PYUSD', type: '法币储备' },
+};
+const TRACKED_IDS = new Set(Object.keys(TRACKED).map(Number));
+
+function fmt(n, dec=2) {
+  if (n >= 1e9) return '$' + (n/1e9).toFixed(dec) + 'B';
+  if (n >= 1e6) return '$' + (n/1e6).toFixed(dec) + 'M';
+  return '$' + n.toFixed(dec);
+}
+function pct(n, total) { return (n/total*100).toFixed(1) + '%'; }
+function chgClass(n) { return n >= 0 ? 'pos' : 'neg'; }
+function chgFmt(n) {
+  const s = n >= 0 ? '+' : '';
+  if (Math.abs(n) >= 1e9) return s + (n/1e9).toFixed(2) + 'B';
+  if (Math.abs(n) >= 1e6) return s + (n/1e6).toFixed(0) + 'M';
+  return s + n.toFixed(0);
+}
+
+// ── Fetch data ──
+async function loadData() {
+  try {
+    const res = await fetch('https://stablecoins.llama.fi/stablecoins?includePrices=true');
+    const data = await res.json();
+    const coins = data.peggedAssets.filter(c => {
+      const supply = c.circulating?.peggedUSD || 0;
+      return TRACKED_IDS.has(c.id) || supply >= 1e9;
+    });
+
+    // Filter to our tracked set, sorted by supply
+    let rows = [];
+    for (const c of coins) {
+      const id = c.id;
+      const meta = TRACKED[id];
+      if (!meta) continue;
+      const supply = c.circulating?.peggedUSD || 0;
+      const price = c.price || 1;
+      const d1 = c.circulatingPrevDay?.peggedUSD ? supply - c.circulatingPrevDay.peggedUSD : 0;
+      const d7 = c.circulatingPrevWeek?.peggedUSD ? supply - c.circulatingPrevWeek.peggedUSD : 0;
+      const d30 = c.circulatingPrevMonth?.peggedUSD ? supply - c.circulatingPrevMonth.peggedUSD : 0;
+      rows.push({ ...meta, id, supply, price, d1, d7, d30 });
+    }
+    rows.sort((a, b) => b.supply - a.supply);
+
+    const total = rows.reduce((s, r) => s + r.supply, 0);
+    const usdt = rows.find(r => r.ticker === 'USDT');
+    const usdc = rows.find(r => r.ticker === 'USDC');
+
+    // KPIs
+    document.getElementById('kpi-total').textContent = fmt(total, 1);
+    document.getElementById('kpi-usdt-share').textContent = usdt ? pct(usdt.supply, total) : '—';
+    document.getElementById('kpi-usdc-share').textContent = usdc ? pct(usdc.supply, total) : '—';
+    const usdtS = usdt ? usdt.supply/total*100 : 0;
+    const usdcS = usdc ? usdc.supply/total*100 : 0;
+    document.getElementById('kpi-hhi').textContent = Math.round(usdtS*usdtS + usdcS*usdcS);
+    document.getElementById('update-time').textContent = 'Updated: ' + new Date().toLocaleString('zh-CN');
+
+    if (usdc) {
+      document.getElementById('usdc-q1').textContent = (usdc.supply / 1e9).toFixed(1);
+    }
+
+    // Table
+    const tbody = document.getElementById('stable-table');
+    tbody.innerHTML = rows.map((r, i) => `
+      <tr>
+        <td class="center">${i+1}</td>
+        <td><strong>${r.name}</strong> <span style="color:var(--text2)">${r.ticker}</span></td>
+        <td class="num">${fmt(r.supply, 2)}</td>
+        <td class="num">$${r.price.toFixed(4)}</td>
+        <td class="num ${chgClass(r.d1)}">${chgFmt(r.d1)}</td>
+        <td class="num ${chgClass(r.d7)}">${chgFmt(r.d7)}</td>
+        <td class="num ${chgClass(r.d30)}">${chgFmt(r.d30)}</td>
+        <td class="center">${pct(r.supply, total)}</td>
+        <td><span class="tag tag-blue">${r.type}</span></td>
+      </tr>
+    `).join('');
+
+    // Insight
+    const growing = rows.filter(r => r.d30 > 0).sort((a,b) => b.d30 - a.d30);
+    const shrinking = rows.filter(r => r.d30 < 0).sort((a,b) => a.d30 - b.d30);
+    document.getElementById('insight-box').innerHTML =
+      '<strong>30D趋势:</strong><br>' +
+      (growing.length ? '<span class="pos">[增长]</span> ' + growing.map(r => `${r.ticker} ${chgFmt(r.d30)} (${(r.d30/r.supply*100).toFixed(1)}%)`).join(' | ') + '<br>' : '') +
+      (shrinking.length ? '<span class="neg">[下降]</span> ' + shrinking.map(r => `${r.ticker} ${chgFmt(r.d30)} (${(r.d30/r.supply*100).toFixed(1)}%)`).join(' | ') + '<br>' : '') +
+      '<br><strong>核心结论:</strong> 法币储备型(USDT/USDC/USD1)稳步增长; 合成型(USDe)与支付型(PYUSD)显著收缩';
+
+  } catch (err) {
+    document.getElementById('stable-table').innerHTML =
+      `<tr><td colspan="9" style="color:var(--red);padding:20px">API Error: ${err.message}</td></tr>`;
+  }
+}
+
+// ── Yield curve bars ──
+function renderYieldCurve() {
+  const yields = [
+    { label: '1M', val: 3.71 },
+    { label: '3M', val: 3.70 },
+    { label: '6M', val: 3.76 },
+    { label: '1Y', val: 3.78 },
+    { label: '2Y', val: 3.95 },
+    { label: '5Y', val: 4.08 },
+    { label: '10Y', val: 4.45 },
+    { label: '30Y', val: 5.02 },
+  ];
+  const max = 5.5;
+  document.getElementById('yield-curve').innerHTML = yields.map(y => `
+    <div class="rate-bar">
+      <div class="rate-label">${y.label}</div>
+      <div class="bar"><div class="bar-fill" style="width:${y.val/max*100}%;background:linear-gradient(90deg,var(--gold),var(--gold2))"></div></div>
+      <div class="rate-val" style="color:var(--gold)">${y.val.toFixed(2)}%</div>
+    </div>
+  `).join('');
+}
+
+// ── Compare table ──
+function renderCompare() {
+  const rows = [
+    ['发行量', '$78.3B (26.7%)', '$189.5B (64.6%)', 'usdt', 'USDT 2.4x; 但USDC在DeFi占比更高'],
+    ['30D增长', '+$775M (+1.0%)', '+$5.4B (+2.9%)', 'usdt', 'USDT增速也更快'],
+    ['2025年收入', '$2.68B', '~$130亿', 'usdt', 'Tether 4.9倍于Circle'],
+    ['利润率', 'RLDC 40% → ~$1.07B', '~90%+ → ~$117亿', 'usdt', 'Coinbase分成吃掉60%利润'],
+    ['员工数', '~700人', '~100人', 'usdt', '人均产出差42倍'],
+    ['监管合规', 'SEC注册, SOC审计', 'BVI注册, 非四大审计', 'usdc', '机构首选Circle'],
+    ['储备透明度', 'BlackRock管理, 100%美国国债', '国债+黄金+BTC(不完全透明)', 'usdc', '100%透明 vs 部分透明'],
+    ['公司治构', 'NYSE上市, SEC报告', '私人公司, BVI注册', 'usdc', '上市=透明度溢价'],
+    ['分销网络', 'Coinbase 50%分成 + CPN', '交易所原生集成', 'usdt', 'Tether无分销费'],
+    ['DeFi渗透', 'Ethereum DeFi首选', 'CEX+新兴市场转账', 'tie', 'USDC=DeFi; USDT=CEX'],
+    ['链上分布', 'ETH>Solana>Base>Arb', 'Tron(58%)>ETH>Solana', 'tie', 'Tron=转账; Solana增长最快'],
+    ['法律风险', 'Drift诉讼(pending)', '多次被罚($4.1B和解)', 'usdc', 'Tether法律尾巴长'],
+    ['可投资性', 'NYSE:CRCL $121.14', '未上市', 'usdc', '唯一纯稳定币股票'],
+    ['CLARITY Act', '禁passive yield; 模式调整', '海外运营, 影响有限', 'usdt', '美国监管主要约束Circle'],
+    ['增长催化', 'Meta+CPN+合规制度', '新兴市场+Tron+避险', 'usdt', 'Tether TAM更大'],
+  ];
+
+  const container = document.getElementById('compare-table');
+  container.innerHTML =
+    '<div class="compare-row header"><div>维度</div><div>Circle / USDC</div><div>Tether / USDT</div><div>赢家</div></div>' +
+    rows.map(([dim, circle, tether, winner, note]) => `
+      <div class="compare-row">
+        <div class="dim">${dim}</div>
+        <div>${circle}</div>
+        <div>${tether}</div>
+        <div class="winner-${winner}">${winner === 'usdc' ? 'USDC' : winner === 'usdt' ? 'USDT' : '平'}</div>
+      </div>
+    `).join('');
+}
+
+// ── Timeline ──
+function renderTimeline() {
+  const events = [
+    ['2025-01', 'Tether全年利润$130亿, 超高盛', '财务', '★★★', 'red'],
+    ['2025-05', 'GENIUS Act参议院通过', '监管', '★★★', 'red'],
+    ['2025-06', 'Circle NYSE IPO (CRCL) 开盘$31', '上市', '★★★', 'red'],
+    ['2025-07', 'PayPal PYUSD突破$5B (后回落至$3.4B)', '竞争', '★★', 'yellow'],
+    ['2025-08', 'Ethena USDe峰值$5.9B + sUSDe 25% APY', '竞争', '★★', 'yellow'],
+    ['2025-09', 'WLFI发行USD1 (Trump关联)', '竞争', '★★', 'yellow'],
+    ['2025-Q4', 'USDC季度末$75.3B (QoQ +13.7%)', '数据', '★★', 'yellow'],
+    ['2025-12', 'MakerDAO → Sky品牌重塑, DAI→USDS', '竞争', '★', 'blue'],
+    ['2026-02', 'Circle CPN年化$5.7B', '业务', '★★', 'yellow'],
+    ['2026-03', 'CRCL $68→$94 (+38%单月)', '股价', '★★', 'yellow'],
+    ['2026-04-29', 'FOMC hold 3.50-3.75% (8-4异常分裂)', '宏观', '★★', 'yellow'],
+    ['2026-04-29', 'Meta开始USDC创作者支付', '合作', '★★', 'yellow'],
+    ['2026-05-01', 'Circle在Solana铸造$750M USDC', '链上', '★★', 'yellow'],
+    ['2026-05-02', '★ CLARITY Act妥协案发布', '监管', '★★★', 'red'],
+    ['2026-05-04', '★ CRCL暴涨+18%至$121.14', '股价', '★★★', 'red'],
+    ['2026-05-11', '[即将] Circle Q1财报 + Senate markup', '财报', '★★★', 'red'],
+    ['2026-05-15', '[即将] Powell卸任Fed主席', '宏观', '★', 'blue'],
+    ['2026-06-17', '[即将] 6月FOMC', '宏观', '★★', 'yellow'],
+    ['2026-08', '[即将] Coinbase合约续期窗口', '业务', '★★★', 'red'],
+    ['2026-H2', '[即将] CLARITY Act众议院投票', '监管', '★★★', 'red'],
+  ];
+
+  document.getElementById('timeline-list').innerHTML = events.map(([date, event, cat, level, color]) => `
+    <div class="timeline-item">
+      <div class="tl-date">${date}</div>
+      <div class="tl-body">
+        <h4>${event} <span class="tl-tag tag tag-${color}">${cat}</span> <span class="tl-tag tag tag-${color}">${level}</span></h4>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── Init ──
+loadData();
+renderYieldCurve();
+renderCompare();
+renderTimeline();
+</script>
+</body>
+</html>
