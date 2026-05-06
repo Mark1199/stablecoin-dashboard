@@ -18,7 +18,6 @@
 body{font-family:-apple-system,'PingFang SC','Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
 a{color:var(--gold);text-decoration:none}
 
-/* Header */
 .header{background:var(--navy);border-bottom:2px solid var(--gold);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
 .header h1{font-size:18px;color:var(--gold);font-weight:600;letter-spacing:1px}
 .header .meta{font-size:12px;color:var(--text2)}
@@ -27,33 +26,33 @@ a{color:var(--gold);text-decoration:none}
 .status .dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-/* Tabs */
 .tabs{display:flex;background:var(--navy);border-bottom:1px solid var(--border);padding:0 24px;overflow-x:auto}
 .tab{padding:12px 20px;font-size:13px;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:.2s}
 .tab:hover{color:var(--text)}
 .tab.active{color:var(--gold);border-bottom-color:var(--gold)}
 
-/* Layout */
 .content{max-width:1400px;margin:0 auto;padding:20px}
 .panel{display:none}
 .panel.active{display:block}
 
-/* KPI row */
 .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
 .kpi{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;text-align:center}
 .kpi .label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
 .kpi .value{font-size:22px;font-weight:700;color:var(--gold);margin-top:4px;font-family:'SF Mono',Menlo,monospace}
 .kpi .sub{font-size:11px;color:var(--text3);margin-top:2px}
 
-/* Table */
 .table-wrap{overflow-x:auto;margin-bottom:20px}
 table{width:100%;border-collapse:collapse;font-size:13px}
-thead th{background:var(--navy3);color:var(--gold2);padding:10px 12px;text-align:left;font-weight:600;font-size:12px;white-space:nowrap;position:sticky;top:0;border-bottom:2px solid var(--gold)}
+thead th{background:var(--navy3);color:var(--gold2);padding:10px 12px;font-weight:600;font-size:12px;white-space:nowrap;position:sticky;top:0;border-bottom:2px solid var(--gold)}
+thead th.r{text-align:right}
+thead th.c{text-align:center}
+thead th.l{text-align:left}
 tbody tr{border-bottom:1px solid var(--border);transition:.15s}
 tbody tr:hover{background:var(--navy2)}
 td{padding:10px 12px;vertical-align:middle}
-td.num{font-family:'SF Mono',Menlo,monospace;text-align:right;white-space:nowrap}
-td.center{text-align:center}
+td.r{font-family:'SF Mono',Menlo,monospace;text-align:right;white-space:nowrap}
+td.c{text-align:center}
+td.l{text-align:left}
 .pos{color:var(--green)}
 .neg{color:var(--red)}
 .tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
@@ -62,29 +61,18 @@ td.center{text-align:center}
 .tag-yellow{background:rgba(255,193,7,.15);color:var(--yellow)}
 .tag-blue{background:rgba(66,165,245,.15);color:var(--blue)}
 
-/* Section */
 .section{margin-bottom:24px}
 .section-title{font-size:14px;font-weight:600;color:var(--gold);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
 .section-title::before{content:'';width:3px;height:16px;background:var(--gold);border-radius:2px}
 
-/* Card grid */
-.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;margin-bottom:20px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;transition:.2s}
-.card:hover{border-color:var(--gold)}
-.card h3{font-size:13px;color:var(--gold);margin-bottom:10px}
-.card p{font-size:12px;color:var(--text2);line-height:1.6}
-
-/* Insight box */
 .insight{background:var(--navy2);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:20px;font-size:13px;line-height:1.8}
 
-/* Rate bar */
 .rate-bar{display:flex;align-items:center;gap:8px;margin:4px 0}
 .rate-bar .bar{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
 .rate-bar .bar-fill{height:100%;border-radius:3px;transition:.5s}
 .rate-bar .rate-label{font-size:11px;color:var(--text2);width:40px}
 .rate-bar .rate-val{font-size:12px;font-family:monospace;width:50px;text-align:right}
 
-/* Timeline */
 .timeline-item{display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--border)}
 .timeline-item:last-child{border-bottom:none}
 .tl-date{min-width:90px;font-size:12px;color:var(--gold);font-family:monospace;padding-top:2px}
@@ -92,8 +80,7 @@ td.center{text-align:center}
 .tl-body p{font-size:12px;color:var(--text2)}
 .tl-tag{margin-left:8px;font-size:10px;vertical-align:middle}
 
-/* Compare */
-.compare-row{display:grid;grid-template-columns:180px 1fr 1fr 80px;gap:1px;background:var(--border);margin-bottom:1px}
+.compare-row{display:grid;grid-template-columns:140px 1fr 1fr 70px;gap:1px;background:var(--border);margin-bottom:1px}
 .compare-row>div{background:var(--card);padding:10px 12px;font-size:12px}
 .compare-row.header>div{background:var(--navy3);color:var(--gold2);font-weight:600;font-size:11px}
 .compare-row .dim{color:var(--gold);font-weight:600}
@@ -101,17 +88,24 @@ td.center{text-align:center}
 .winner-usdt{color:var(--red);font-weight:700;text-align:center}
 .winner-tie{color:var(--yellow);font-weight:700;text-align:center}
 
-/* Loading */
+.predict-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.predict-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px}
+.predict-card h3{font-size:13px;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.predict-card .metric{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px}
+.predict-card .metric:last-child{border-bottom:none}
+.predict-card .metric .k{color:var(--text2)}
+.predict-card .metric .v{font-family:'SF Mono',Menlo,monospace;color:var(--text)}
+
 .loading{text-align:center;padding:60px;color:var(--text2)}
 .loading .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* Footer */
 .footer{text-align:center;padding:20px;font-size:11px;color:var(--text3);border-top:1px solid var(--border);margin-top:40px}
 
 @media(max-width:768px){
   .kpi-row{grid-template-columns:repeat(2,1fr)}
   .compare-row{grid-template-columns:1fr}
+  .predict-grid{grid-template-columns:1fr}
   .header{flex-direction:column;gap:8px}
   .content{padding:12px}
 }
@@ -130,6 +124,7 @@ td.center{text-align:center}
 <div class="tabs">
   <div class="tab active" data-tab="overview">核心仪表盘</div>
   <div class="tab" data-tab="rates">利率与收入测算</div>
+  <div class="tab" data-tab="predict">Q1财报预测</div>
   <div class="tab" data-tab="compare">CRCL vs USDT</div>
   <div class="tab" data-tab="timeline">事件时间表</div>
   <div class="tab" data-tab="sources">数据源</div>
@@ -140,21 +135,21 @@ td.center{text-align:center}
 <!-- ============ Tab 1: Overview ============ -->
 <div class="panel active" id="panel-overview">
   <div class="kpi-row" id="kpi-row">
-    <div class="kpi"><div class="label">总发行量 (Top 7)</div><div class="value" id="kpi-total">—</div></div>
-    <div class="kpi"><div class="label">USDT 占比</div><div class="value" id="kpi-usdt-share">—</div></div>
-    <div class="kpi"><div class="label">USDC 占比</div><div class="value" id="kpi-usdc-share">—</div></div>
-    <div class="kpi"><div class="label">HHI 集中度</div><div class="value" id="kpi-hhi">—</div></div>
+    <div class="kpi"><div class="label">总发行量 (Top 10)</div><div class="value" id="kpi-total">--</div><div class="sub" id="kpi-total-sub"></div></div>
+    <div class="kpi"><div class="label">USDT 占比</div><div class="value" id="kpi-usdt-share">--</div></div>
+    <div class="kpi"><div class="label">USDC 占比</div><div class="value" id="kpi-usdc-share">--</div></div>
+    <div class="kpi"><div class="label">HHI 集中度</div><div class="value" id="kpi-hhi">--</div><div class="sub">越高越集中</div></div>
     <div class="kpi"><div class="label">Fed Funds Rate</div><div class="value">3.50-3.75%</div><div class="sub">FOMC 4/29 Hold</div></div>
     <div class="kpi"><div class="label">3M T-Bill</div><div class="value">3.70%</div><div class="sub">H.15 5/4/2026</div></div>
   </div>
 
   <div class="section">
-    <div class="section-title">稳定币发行量排名 ($1B+)</div>
+    <div class="section-title">稳定币发行量排名 Top 10 ($1B+)</div>
     <div class="table-wrap">
       <table>
         <thead><tr>
-          <th>#</th><th>名称</th><th>发行量</th><th>价格</th>
-          <th>1D</th><th>7D</th><th>30D</th><th>市场份额</th><th>类型</th>
+          <th class="c">#</th><th class="l">名称</th><th class="r">发行量</th><th class="r">价格</th>
+          <th class="r">1D变动</th><th class="r">7D变动</th><th class="r">30D变动</th><th class="r">市场份额</th><th class="c">类型</th>
         </tr></thead>
         <tbody id="stable-table"><tr><td colspan="9"><div class="loading"><div class="spinner"></div>从 DefiLlama 加载中...</div></td></tr></tbody>
       </table>
@@ -167,13 +162,13 @@ td.center{text-align:center}
     <div class="section-title">USDC 季度趋势</div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>季度</th><th>期末($B)</th><th>环比</th><th>环比%</th><th>备注</th></tr></thead>
+        <thead><tr><th class="l">季度</th><th class="r">期末发行量($B)</th><th class="r">环比变动</th><th class="r">环比%</th><th class="l">备注</th></tr></thead>
         <tbody>
-          <tr><td>Q1'25</td><td class="num">43.0</td><td class="num">—</td><td class="num">—</td><td>IPO前低基数</td></tr>
-          <tr><td>Q2'25</td><td class="num">57.5</td><td class="num pos">+14.5B</td><td class="num pos">+33.7%</td><td>IPO + GENIUS Act签署</td></tr>
-          <tr><td>Q3'25</td><td class="num">66.2</td><td class="num pos">+8.7B</td><td class="num pos">+15.1%</td><td>机构资金入场</td></tr>
-          <tr><td>Q4'25</td><td class="num">75.3</td><td class="num pos">+9.1B</td><td class="num pos">+13.7%</td><td>牛市 + Coinbase推广</td></tr>
-          <tr><td>Q1'26E</td><td class="num" id="usdc-q1">~78</td><td class="num pos">+2.7B</td><td class="num pos">+3.6%</td><td>增速显著放缓; Meta USDC上线</td></tr>
+          <tr><td class="l">Q1'25</td><td class="r">43.0</td><td class="r">--</td><td class="r">--</td><td class="l">IPO前低基数</td></tr>
+          <tr><td class="l">Q2'25</td><td class="r">57.5</td><td class="r pos">+14.5B</td><td class="r pos">+33.7%</td><td class="l">IPO + GENIUS Act签署</td></tr>
+          <tr><td class="l">Q3'25</td><td class="r">66.2</td><td class="r pos">+8.7B</td><td class="r pos">+15.1%</td><td class="l">机构资金入场</td></tr>
+          <tr><td class="l">Q4'25</td><td class="r">75.3</td><td class="r pos">+9.1B</td><td class="r pos">+13.7%</td><td class="l">牛市 + Coinbase推广</td></tr>
+          <tr><td class="l"><strong>Q1'26</strong></td><td class="r"><strong>79.2</strong></td><td class="r pos"><strong>+3.9B</strong></td><td class="r pos"><strong>+5.2%</strong></td><td class="l">Circle官方3/16披露$79.2B; 增速放缓但仍正增长</td></tr>
         </tbody>
       </table>
     </div>
@@ -191,75 +186,182 @@ td.center{text-align:center}
     <div class="section-title">FOMC 利率展望 (CME FedWatch)</div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>会议</th><th>日期</th><th>维持</th><th>降25bp</th><th>降50bp</th><th>加25bp</th><th>共识</th></tr></thead>
+        <thead><tr><th class="l">会议</th><th class="c">日期</th><th class="r">维持</th><th class="r">降25bp</th><th class="r">降50bp</th><th class="r">加25bp</th><th class="l">共识</th></tr></thead>
         <tbody>
-          <tr><td>5月FOMC</td><td>5/6-7</td><td class="num">95.9%</td><td class="num">4.1%</td><td class="num">—</td><td class="num">—</td><td>维持</td></tr>
-          <tr><td>6月FOMC</td><td>6/16-17</td><td class="num">89.2%</td><td class="num">7.0%</td><td class="num">—</td><td class="num">3.8%</td><td>维持 (加息声音!)</td></tr>
-          <tr><td>9月FOMC</td><td>9/15-16</td><td class="num">~60%</td><td class="num">~30%</td><td class="num">~8%</td><td class="num">~2%</td><td>大概率维持</td></tr>
-          <tr><td>12月FOMC</td><td>12/14-15</td><td class="num">51.3%</td><td class="num">35.7%</td><td class="num">9.5%</td><td class="num">3.5%</td><td>略偏维持</td></tr>
+          <tr><td class="l">5月FOMC</td><td class="c">5/6-7</td><td class="r">95.9%</td><td class="r">4.1%</td><td class="r">--</td><td class="r">--</td><td class="l">维持</td></tr>
+          <tr><td class="l">6月FOMC</td><td class="c">6/16-17</td><td class="r">89.2%</td><td class="r">7.0%</td><td class="r">--</td><td class="r">3.8%</td><td class="l">维持 (有加息声音)</td></tr>
+          <tr><td class="l">9月FOMC</td><td class="c">9/15-16</td><td class="r">~60%</td><td class="r">~30%</td><td class="r">~8%</td><td class="r">~2%</td><td class="l">大概率维持</td></tr>
+          <tr><td class="l">12月FOMC</td><td class="c">12/14-15</td><td class="r">51.3%</td><td class="r">35.7%</td><td class="r">9.5%</td><td class="r">3.5%</td><td class="l">略偏维持</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="insight">全年最多降1次25bp | Dot plot中位数指向仅1次降息 | Iran和平谈判若成功 → 油价降 → 通胀降 → 降息加速</div>
+    <div class="insight">全年最多降1次25bp | Dot plot中位数指向仅1次降息 | Iran和平谈判若成功 -> 油价降 -> 通胀降 -> 降息加速</div>
   </div>
 
   <div class="section">
     <div class="section-title">Circle 储备收入敏感度</div>
     <div class="insight" style="border-left-color:var(--blue)">
       核心公式: 年化储备收入 = USDC发行量 x 储备收益率 x RLDC(40%)<br>
-      储备组合: ~80% 短期美国国债 + ~20% 现金/回购 → 加权收益率 ≈ 3M T-Bill - 15bp
+      储备组合: ~80% 短期美国国债 + ~20% 现金/回购 -> 加权收益率 ~ 3M T-Bill
     </div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>情景</th><th>Fed Funds</th><th>3M T-Bill</th><th>USDC($B)</th><th>毛收入($M)</th><th>RLDC</th><th>净收入($M)</th><th>vs当前</th><th>概率</th></tr></thead>
+        <thead><tr><th class="l">情景</th><th class="r">Fed Funds</th><th class="r">3M T-Bill</th><th class="r">USDC($B)</th><th class="r">毛收入($M)</th><th class="c">RLDC</th><th class="r">净收入($M)</th><th class="c">vs当前</th><th class="c">概率</th></tr></thead>
         <tbody>
-          <tr><td>当前基准</td><td class="num">3.50-3.75%</td><td class="num">3.70%</td><td class="num">78</td><td class="num">2,769</td><td class="center">40%</td><td class="num">1,108</td><td class="center tag tag-yellow">—</td><td class="center">52%</td></tr>
-          <tr><td>降1次</td><td class="num">3.25-3.50%</td><td class="num">3.45%</td><td class="num">82</td><td class="num">2,706</td><td class="center">40%</td><td class="num">1,082</td><td class="center tag tag-red">-2.3%</td><td class="center">36%</td></tr>
-          <tr><td>降2次(鸽)</td><td class="num">3.00-3.25%</td><td class="num">3.20%</td><td class="num">85</td><td class="num">2,593</td><td class="center">40%</td><td class="num">1,037</td><td class="center tag tag-red">-6.4%</td><td class="center">10%</td></tr>
-          <tr><td>加1次(鹰)</td><td class="num">3.75-4.00%</td><td class="num">3.95%</td><td class="num">76</td><td class="num">2,888</td><td class="center">40%</td><td class="num">1,155</td><td class="center tag tag-green">+4.2%</td><td class="center">4%</td></tr>
-          <tr><td>降4次(极鸽)</td><td class="num">2.50-2.75%</td><td class="num">2.70%</td><td class="num">90</td><td class="num">2,295</td><td class="center">40%</td><td class="num">918</td><td class="center tag tag-red">-17.1%</td><td class="center">&lt;1%</td></tr>
+          <tr><td>当前基准</td><td class="r">3.50-3.75%</td><td class="r">3.70%</td><td class="r">78</td><td class="r">2,769</td><td class="c">40%</td><td class="r">1,108</td><td class="c"><span class="tag tag-yellow">基准</span></td><td class="c">52%</td></tr>
+          <tr><td>降1次</td><td class="r">3.25-3.50%</td><td class="r">3.45%</td><td class="r">82</td><td class="r">2,706</td><td class="c">40%</td><td class="r">1,082</td><td class="c"><span class="tag tag-red">-2.3%</span></td><td class="c">36%</td></tr>
+          <tr><td>降2次(鸽)</td><td class="r">3.00-3.25%</td><td class="r">3.20%</td><td class="r">85</td><td class="r">2,593</td><td class="c">40%</td><td class="r">1,037</td><td class="c"><span class="tag tag-red">-6.4%</span></td><td class="c">10%</td></tr>
+          <tr><td>加1次(鹰)</td><td class="r">3.75-4.00%</td><td class="r">3.95%</td><td class="r">76</td><td class="r">2,888</td><td class="c">40%</td><td class="r">1,155</td><td class="c"><span class="tag tag-green">+4.2%</span></td><td class="c">4%</td></tr>
+          <tr><td>降4次(极鸽)</td><td class="r">2.50-2.75%</td><td class="r">2.70%</td><td class="r">90</td><td class="r">2,295</td><td class="c">40%</td><td class="r">918</td><td class="c"><span class="tag tag-red">-17.1%</span></td><td class="c">&lt;1%</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title">各发行方年化收入估算</div>
+    <div class="section-title">各发行方年化储备收入估算</div>
+    <div class="insight" style="border-left-color:var(--blue)">
+      美债储备型稳定币的储备收益率都接近3M T-Bill水平 (~3.6-3.7%)，差异主要来自分销成本结构。<br>
+      Tether略高(~3.8%)因储备含黄金/BTC等非国债资产; Ethena完全不同 — 依赖加密funding rate。
+    </div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>发行方</th><th>稳定币</th><th>发行量($B)</th><th>储备类型</th><th>估计收益率</th><th>毛收入($M)</th><th>分销成本</th><th>净收入($M)</th><th>备注</th></tr></thead>
+        <thead><tr><th class="l">发行方</th><th class="c">稳定币</th><th class="r">发行量($B)</th><th class="l">储备类型</th><th class="r">储备收益率</th><th class="r">毛收入($M)</th><th class="r">分销成本</th><th class="r">净收入($M)</th><th class="l">备注</th></tr></thead>
         <tbody>
-          <tr><td>Tether</td><td>USDT</td><td class="num">189.5</td><td>国债+黄金+BTC</td><td class="num">~3.8%</td><td class="num">7,201</td><td class="num">&lt;5%</td><td class="num pos">6,841</td><td>员工~100; 2025利润$130亿</td></tr>
-          <tr><td>Circle</td><td>USDC</td><td class="num">78.3</td><td>短期国债+现金</td><td class="num">3.55%</td><td class="num">2,778</td><td class="num">~60%</td><td class="num">1,111</td><td>RLDC 40%; Coinbase拿50%+</td></tr>
-          <tr><td>Sky/Maker</td><td>USDS+DAI</td><td class="num">13.4</td><td>USDC+RWA+ETH</td><td class="num">~4.5%</td><td class="num">602</td><td class="num">~30%</td><td class="num">421</td><td>DSR 5%; RWA yield较高</td></tr>
-          <tr><td>Ethena</td><td>USDe</td><td class="num">3.9</td><td>ETH质押+空头</td><td class="num">~12%</td><td class="num">468</td><td class="num">~50%</td><td class="num">234</td><td>Funding rate驱动, 非国债</td></tr>
-          <tr><td>Paxos/PayPal</td><td>PYUSD</td><td class="num">3.4</td><td>短期国债</td><td class="num">~3.6%</td><td class="num">122</td><td class="num">~40%</td><td class="num">73</td><td>PayPal拿大头; 发行量下滑</td></tr>
+          <tr><td>Tether</td><td class="c">USDT</td><td class="r">189.5</td><td>国债+黄金+BTC</td><td class="r">~3.8%</td><td class="r">7,201</td><td class="r">&lt;5%</td><td class="r pos">6,841</td><td>员工~100; 2025利润$130亿</td></tr>
+          <tr><td>Circle</td><td class="c">USDC</td><td class="r">78.3</td><td>短期国债+现金</td><td class="r">~3.6%</td><td class="r">2,819</td><td class="r">~60%</td><td class="r">1,111</td><td>RLDC 40%; Coinbase拿50%+</td></tr>
+          <tr><td>WLFI</td><td class="c">USD1</td><td class="r">4.6</td><td>短期国债+存款</td><td class="r">~3.6%</td><td class="r">166</td><td class="r">不详</td><td class="r">不详</td><td>Trump关联; 结构不透明</td></tr>
+          <tr><td>Paxos/PayPal</td><td class="c">PYUSD</td><td class="r">3.4</td><td>短期国债+现金</td><td class="r">~3.6%</td><td class="r">122</td><td class="r">~40%</td><td class="r">73</td><td>PayPal拿大头; 发行量下滑</td></tr>
+          <tr><td>Sky/Maker</td><td class="c">USDS+DAI</td><td class="r">13.4</td><td>USDC+RWA+ETH</td><td class="r">~4.5%</td><td class="r">602</td><td class="r">~30%</td><td class="r">421</td><td>DSR 5%; RWA yield拉高均值</td></tr>
+          <tr><td>Ethena</td><td class="c">USDe</td><td class="r">3.9</td><td>ETH质押+期货空头</td><td class="r">~12%</td><td class="r">468</td><td class="r">~50%</td><td class="r">234</td><td>Funding rate驱动, 与利率反相关</td></tr>
         </tbody>
       </table>
     </div>
     <div class="insight">
-      Tether人均产出是Circle的42倍 — Coinbase分销成本是最大利润吞噬者<br>
-      利率每降100bp, Circle年化收入减少~$780M (-28%) — 高度利率敏感<br>
-      Coinbase 8月续约是Circle 2026最大单一风险 — 当前50%分成占RLDC 60%
+      Tether人均产出是Circle的42倍 -- Coinbase分销成本是最大利润吞噬者<br>
+      利率每降100bp, Circle年化收入减少~$780M (-28%) -- 高度利率敏感<br>
+      Coinbase 8月续约是Circle 2026最大单一风险 -- 当前50%分成占RLDC 60%
     </div>
   </div>
 </div>
 
-<!-- ============ Tab 3: Compare ============ -->
+<!-- ============ Tab 3: Q1 Prediction ============ -->
+<div class="panel" id="panel-predict">
+  <div class="section">
+    <div class="section-title">Circle Q1'26 财报 AI 预测 (5/11盘后发布)</div>
+    <div class="insight" style="border-left-color:var(--green)">
+      <strong>方法论:</strong> 基于链上可观测数据(USDC发行量、铸造/赎回、链上交易量) + 利率环境(Q1平均3M T-Bill) + 公司guidance + 历史季节性，构建底层收入模型。<br>
+      <strong>核心输入:</strong> Circle 3/16官方披露USDC $79.2B | Q1平均USDC估算 ~$77B | Q4'25平均 ~$76.2B | 3M T-Bill Q1均值 ~3.65%
+    </div>
+  </div>
+
+  <div class="predict-grid">
+    <div class="predict-card">
+      <h3>链上数据输入 (On-Chain Observables)</h3>
+      <div class="metric"><span class="k">Q1末USDC发行量</span><span class="v">$79.2B (Circle 3/16披露)</span></div>
+      <div class="metric"><span class="k">Q4末USDC发行量</span><span class="v">$75.3B</span></div>
+      <div class="metric"><span class="k">Q1平均USDC (估)</span><span class="v">~$77.0B (线性插值)</span></div>
+      <div class="metric"><span class="k">Q4平均USDC</span><span class="v">~$76.2B</span></div>
+      <div class="metric"><span class="k">QoQ平均增长</span><span class="v">+$0.8B (+1.1%)</span></div>
+      <div class="metric"><span class="k">EURC发行量</span><span class="v">$382.8M (vs Q4 $309.6M, +24%)</span></div>
+      <div class="metric"><span class="k">链上交易量 YoY</span><span class="v">~$12T (+247% YoY)</span></div>
+      <div class="metric"><span class="k">Solana铸造事件</span><span class="v">5/1 $750M (+20% Solana USDC)</span></div>
+    </div>
+    <div class="predict-card">
+      <h3>利率环境输入 (Rate Inputs)</h3>
+      <div class="metric"><span class="k">Q1 Fed Funds Range</span><span class="v">3.50-3.75% (全季Hold)</span></div>
+      <div class="metric"><span class="k">Q1平均 3M T-Bill</span><span class="v">~3.65%</span></div>
+      <div class="metric"><span class="k">Q4平均 3M T-Bill</span><span class="v">~3.60%</span></div>
+      <div class="metric"><span class="k">QoQ利率变动</span><span class="v">+5bp (略有利)</span></div>
+      <div class="metric"><span class="k">Circle储备收益率(估)</span><span class="v">~3.55% (T-Bill - ~10bp)</span></div>
+      <div class="metric"><span class="k">公司RLDC Guidance</span><span class="v">38-40%</span></div>
+      <div class="metric"><span class="k">公司OpEx Guidance</span><span class="v">$570-585M/年 ($143-146M/Q)</span></div>
+      <div class="metric"><span class="k">Other Revenue Guidance</span><span class="v">$150-170M/年 ($38-43M/Q)</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Q1'26 收入预测模型</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="l">指标</th><th class="r">Q4'25 实际</th><th class="r">Q1'26 预测</th><th class="r">QoQ</th><th class="l">推导逻辑</th></tr></thead>
+        <tbody>
+          <tr><td>平均USDC ($B)</td><td class="r">76.2</td><td class="r">77.0</td><td class="r pos">+1.1%</td><td>线性插值: (75.3+79.2)/2</td></tr>
+          <tr><td>储备收益率</td><td class="r">3.52%</td><td class="r">3.55%</td><td class="r pos">+3bp</td><td>Q1 3M T-Bill均值略升</td></tr>
+          <tr><td>储备收入 ($M)</td><td class="r">683</td><td class="r">684</td><td class="r pos">+0.1%</td><td>77.0B x 3.55% / 4 = $684M</td></tr>
+          <tr><td>Other Revenue ($M)</td><td class="r">27</td><td class="r">38-43</td><td class="r pos">+41~59%</td><td>Guidance $150-170M/年; CPN加速</td></tr>
+          <tr><td><strong>总收入 ($M)</strong></td><td class="r"><strong>710</strong></td><td class="r"><strong>722-727</strong></td><td class="r pos"><strong>+1.7~2.4%</strong></td><td>储备持平 + Other Revenue增长</td></tr>
+          <tr><td>分销成本 ($M)</td><td class="r">~427</td><td class="r">~410-434</td><td class="r">~0%</td><td>RLDC 38-40% guidance</td></tr>
+          <tr><td>RLDC后收入 ($M)</td><td class="r">283</td><td class="r">289-293</td><td class="r pos">+2-4%</td><td></td></tr>
+          <tr><td>运营费用 ($M)</td><td class="r">~153</td><td class="r">~143-146</td><td class="r pos">-4~7%</td><td>Guidance $570-585M/年</td></tr>
+          <tr><td><strong>营业利润 ($M)</strong></td><td class="r"><strong>~130</strong></td><td class="r"><strong>~143-150</strong></td><td class="r pos"><strong>+10~15%</strong></td><td>OpEx下降 + RLDC略升</td></tr>
+          <tr><td><strong>EPS ($)</strong></td><td class="r"><strong>0.25</strong></td><td class="r"><strong>0.18-0.23</strong></td><td class="r neg"><strong>-8~28%</strong></td><td>共识$0.18-0.25; 股份稀释影响</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="predict-grid">
+    <div class="predict-card" style="border-left:3px solid var(--green)">
+      <h3>Bull Case (Beat)</h3>
+      <div class="metric"><span class="k">Revenue</span><span class="v pos">$730M+ (beat共识$719M)</span></div>
+      <div class="metric"><span class="k">EPS</span><span class="v pos">$0.25+ (beat共识$0.22)</span></div>
+      <div class="metric"><span class="k">触发条件</span><span class="v">Q1 avg USDC > $78B; RLDC > 40%</span></div>
+      <div class="metric"><span class="k">Other Revenue</span><span class="v">$45M+ (CPN加速)</span></div>
+      <div class="metric"><span class="k">概率评估</span><span class="v">30%</span></div>
+    </div>
+    <div class="predict-card" style="border-left:3px solid var(--yellow)">
+      <h3>Base Case (Meet)</h3>
+      <div class="metric"><span class="k">Revenue</span><span class="v">$715-725M (in-line)</span></div>
+      <div class="metric"><span class="k">EPS</span><span class="v">$0.18-0.22</span></div>
+      <div class="metric"><span class="k">触发条件</span><span class="v">Q1 avg USDC ~$77B; RLDC 39%</span></div>
+      <div class="metric"><span class="k">Other Revenue</span><span class="v">$38-42M</span></div>
+      <div class="metric"><span class="k">概率评估</span><span class="v">50%</span></div>
+    </div>
+  </div>
+  <div class="predict-grid">
+    <div class="predict-card" style="border-left:3px solid var(--red)">
+      <h3>Bear Case (Miss)</h3>
+      <div class="metric"><span class="k">Revenue</span><span class="v neg">$700-710M (miss)</span></div>
+      <div class="metric"><span class="k">EPS</span><span class="v neg">$0.12-0.17</span></div>
+      <div class="metric"><span class="k">触发条件</span><span class="v">Q1 avg USDC < $76B; RLDC < 38%</span></div>
+      <div class="metric"><span class="k">Coinbase成本</span><span class="v">分销成本 > 62%</span></div>
+      <div class="metric"><span class="k">概率评估</span><span class="v">20%</span></div>
+    </div>
+    <div class="predict-card" style="border-left:3px solid var(--blue)">
+      <h3>关注的非财务指标</h3>
+      <div class="metric"><span class="k">Coinbase续约进展</span><span class="v">8月窗口, 管理层口风</span></div>
+      <div class="metric"><span class="k">CPN季度数据</span><span class="v">vs $5.7B年化, 环比加速?</span></div>
+      <div class="metric"><span class="k">Meta支付扩展</span><span class="v">4/29上线, 更多国家?</span></div>
+      <div class="metric"><span class="k">CLARITY Act评论</span><span class="v">管理层对yield条款态度</span></div>
+      <div class="metric"><span class="k">FY26 Guidance更新</span><span class="v">RLDC/OpEx/Other Rev调整</span></div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <strong>预测总结:</strong> Q1大概率in-line, 不太可能大幅beat或miss。<br>
+    <strong>核心原因:</strong> USDC平均发行量仅微增(+1.1% QoQ), 利率持平, 储备收入基本持平Q4。增量来自Other Revenue。<br>
+    <strong>真正的催化剂不在数字:</strong> 市场会更关注 Coinbase续约+CLARITY Act+CPN增长 的前瞻指引。<br>
+    <strong>Short Interest 10.8%:</strong> 空头仓位YoY+507%, 如果beat+指引乐观, 可能触发空头回补。<br>
+    <strong>风险:</strong> 股价$121已透支CLARITY Act利好; 如果指引保守, 可能"sell the news"。
+  </div>
+</div>
+
+<!-- ============ Tab 4: Compare ============ -->
 <div class="panel" id="panel-compare">
   <div class="section">
-    <div class="section-title">Circle (CRCL) vs Tether (USDT) — 15维度对比</div>
+    <div class="section-title">Circle (CRCL) vs Tether (USDT) -- 15维度对比</div>
     <div id="compare-table"></div>
   </div>
   <div class="insight" style="border-left-color:var(--blue)">
     <strong>结论:</strong> Tether在规模、利润、效率碾压Circle。但Circle是唯一合规+上市+透明的纯稳定币标的。<br>
-    <strong>投资逻辑:</strong> 信'合规溢价'→做多CRCL | 信'网络效应不可逆'→USDT仍赢<br>
+    <strong>投资逻辑:</strong> 信'合规溢价' -> 做多CRCL | 信'网络效应不可逆' -> USDT仍赢<br>
     <strong>关键变量:</strong> Coinbase续约(8月) + CLARITY Act最终版 + Fed降息节奏<br>
-    <strong>风险:</strong> CRCL估值$23B = ~22x收入 / ~50x净利润 — 已price in大量乐观预期
+    <strong>风险:</strong> CRCL估值$29B = ~22x收入 / ~50x净利润 -- 已price in大量乐观预期
   </div>
 </div>
 
-<!-- ============ Tab 4: Timeline ============ -->
+<!-- ============ Tab 5: Timeline ============ -->
 <div class="panel" id="panel-timeline">
   <div class="section">
     <div class="section-title">行业重大事件时间表</div>
@@ -267,32 +369,32 @@ td.center{text-align:center}
   </div>
 </div>
 
-<!-- ============ Tab 5: Sources ============ -->
+<!-- ============ Tab 6: Sources ============ -->
 <div class="panel" id="panel-sources">
   <div class="section">
     <div class="section-title">数据源 (全部免费/公开)</div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>类别</th><th>数据源</th><th>API/URL</th><th>频率</th><th>备注</th></tr></thead>
+        <thead><tr><th class="l">类别</th><th class="l">数据源</th><th class="l">API/URL</th><th class="c">频率</th><th class="l">备注</th></tr></thead>
         <tbody>
-          <tr><td>稳定币发行量</td><td>DefiLlama</td><td><a href="https://stablecoins.llama.fi/stablecoins?includePrices=true" target="_blank">stablecoins API</a></td><td>实时</td><td>本页面实时拉取</td></tr>
-          <tr><td>国债收益率</td><td>Fed H.15</td><td><a href="https://www.federalreserve.gov/releases/h15/" target="_blank">H.15 Release</a></td><td>每日</td><td>1M~30Y完整曲线</td></tr>
-          <tr><td>FRED利率</td><td>FRED</td><td><a href="https://fred.stlouisfed.org/series/DGS3MO" target="_blank">DGS3MO</a></td><td>每日</td><td>3M/6M/1Y T-Bill</td></tr>
-          <tr><td>CRCL股价</td><td>Yahoo Finance</td><td>finance.yahoo.com/quote/CRCL</td><td>实时</td><td>盘中+盘后</td></tr>
-          <tr><td>分析师共识</td><td>TipRanks</td><td>tipranks.com/stocks/crcl</td><td>每日</td><td>目标价+评级</td></tr>
-          <tr><td>内部人交易</td><td>SEC EDGAR</td><td>Form 144/Form 4</td><td>事件</td><td>减持记录</td></tr>
-          <tr><td>利率预期</td><td>CME FedWatch</td><td><a href="https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html" target="_blank">FedWatch</a></td><td>实时</td><td>FOMC概率</td></tr>
-          <tr><td>立法概率</td><td>Polymarket</td><td>polymarket.com</td><td>实时</td><td>CLARITY Act</td></tr>
-          <tr><td>Circle IR</td><td>Circle</td><td><a href="https://investors.circle.com" target="_blank">investors.circle.com</a></td><td>季度</td><td>10-K/10-Q/8-K</td></tr>
-          <tr><td>Tether透明度</td><td>Tether</td><td><a href="https://tether.to/en/transparency" target="_blank">tether.to</a></td><td>季度</td><td>储备组成</td></tr>
-          <tr><td>价格交叉验证</td><td>CoinGecko</td><td><a href="https://www.coingecko.com/en/coins/usdc" target="_blank">CoinGecko USDC</a></td><td>实时</td><td>历史CSV可下载</td></tr>
-          <tr><td>价格交叉验证</td><td>CoinMarketCap</td><td>coinmarketcap.com</td><td>实时</td><td>发行量验证</td></tr>
+          <tr><td>稳定币发行量</td><td>DefiLlama</td><td><a href="https://stablecoins.llama.fi/stablecoins?includePrices=true" target="_blank">stablecoins API</a></td><td class="c">实时</td><td>本页面实时拉取</td></tr>
+          <tr><td>国债收益率</td><td>Fed H.15</td><td><a href="https://www.federalreserve.gov/releases/h15/" target="_blank">H.15 Release</a></td><td class="c">每日</td><td>1M~30Y完整曲线</td></tr>
+          <tr><td>FRED利率</td><td>FRED</td><td><a href="https://fred.stlouisfed.org/series/DGS3MO" target="_blank">DGS3MO</a></td><td class="c">每日</td><td>3M/6M/1Y T-Bill</td></tr>
+          <tr><td>CRCL股价</td><td>Yahoo Finance</td><td>finance.yahoo.com/quote/CRCL</td><td class="c">实时</td><td>盘中+盘后</td></tr>
+          <tr><td>分析师共识</td><td>TipRanks</td><td>tipranks.com/stocks/crcl</td><td class="c">每日</td><td>目标价+评级</td></tr>
+          <tr><td>内部人交易</td><td>SEC EDGAR</td><td>Form 144/Form 4</td><td class="c">事件</td><td>减持记录</td></tr>
+          <tr><td>利率预期</td><td>CME FedWatch</td><td><a href="https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html" target="_blank">FedWatch</a></td><td class="c">实时</td><td>FOMC概率</td></tr>
+          <tr><td>立法概率</td><td>Polymarket</td><td>polymarket.com</td><td class="c">实时</td><td>CLARITY Act</td></tr>
+          <tr><td>Circle IR</td><td>Circle</td><td><a href="https://investors.circle.com" target="_blank">investors.circle.com</a></td><td class="c">季度</td><td>10-K/10-Q/8-K</td></tr>
+          <tr><td>Tether透明度</td><td>Tether</td><td><a href="https://tether.to/en/transparency" target="_blank">tether.to</a></td><td class="c">季度</td><td>储备组成</td></tr>
+          <tr><td>价格验证</td><td>CoinGecko</td><td><a href="https://www.coingecko.com/en/coins/usdc" target="_blank">CoinGecko USDC</a></td><td class="c">实时</td><td>历史CSV可下载</td></tr>
+          <tr><td>价格验证</td><td>CoinMarketCap</td><td>coinmarketcap.com</td><td class="c">实时</td><td>发行量交叉验证</td></tr>
         </tbody>
       </table>
     </div>
     <div class="insight">
       本页面直接调用 DefiLlama 公开 API, 每次打开自动刷新。<br>
-      利率和事件数据需手动更新 (或让 Claude 用 WebFetch 抓取后更新 JS)。
+      利率和事件数据需手动更新 (或让 Claude 用 WebFetch 抓取后更新)。
     </div>
   </div>
 </div>
@@ -300,11 +402,10 @@ td.center{text-align:center}
 </div>
 
 <div class="footer">
-  STABLECOIN DASHBOARD | Data: DefiLlama + Fed H.15 + CME | For Research Only
+  STABLECOIN DASHBOARD | Data: DefiLlama + Fed H.15 + CME + Circle IR | For Research Only
 </div>
 
 <script>
-// ── Tab switching ──
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -314,17 +415,16 @@ document.querySelectorAll('.tab').forEach(tab => {
   });
 });
 
-// ── Stablecoin config ──
-const TRACKED = {
-  1:   { name: 'Tether', ticker: 'USDT', type: '法币储备' },
-  2:   { name: 'USD Coin', ticker: 'USDC', type: '法币储备' },
-  209: { name: 'Sky Dollar', ticker: 'USDS', type: '超额抵押' },
-  5:   { name: 'Dai', ticker: 'DAI', type: '超额抵押' },
-  262: { name: 'USD1', ticker: 'USD1', type: '法币储备' },
-  146: { name: 'USDe', ticker: 'USDe', type: '合成锚定' },
-  120: { name: 'PayPal USD', ticker: 'PYUSD', type: '法币储备' },
+const STABLECOIN_TYPES = {
+  'Tether':   '法币储备', 'USD Coin': '法币储备', 'Sky Dollar':'超额抵押',
+  'Dai':      '超额抵押', 'World Liberty Financial USD':'法币储备',
+  'Ethena USDe':'合成锚定','PayPal USD':'法币储备',
+  'Hashnote USYC':'RWA收益','BlackRock USD':'RWA收益',
+  'Global Dollar':'法币储备','Ondo US Dollar Yield':'RWA收益',
+  'Falcon USD':'法币储备','Ripple USD':'法币储备',
+  'USDD':'算法/混合','United Stables':'法币储备',
+  'First Digital USD':'法币储备','TrueUSD':'法币储备',
 };
-const TRACKED_IDS = new Set(Object.keys(TRACKED).map(Number));
 
 function fmt(n, dec=2) {
   if (n >= 1e9) return '$' + (n/1e9).toFixed(dec) + 'B';
@@ -340,72 +440,60 @@ function chgFmt(n) {
   return s + n.toFixed(0);
 }
 
-// ── Fetch data ──
 async function loadData() {
   try {
     const res = await fetch('https://stablecoins.llama.fi/stablecoins?includePrices=true');
     const data = await res.json();
-    const coins = data.peggedAssets.filter(c => {
-      const supply = c.circulating?.peggedUSD || 0;
-      return TRACKED_IDS.has(c.id) || supply >= 1e9;
-    });
 
-    // Filter to our tracked set, sorted by supply
     let rows = [];
-    for (const c of coins) {
-      const id = c.id;
-      const meta = TRACKED[id];
-      if (!meta) continue;
+    for (const c of data.peggedAssets) {
       const supply = c.circulating?.peggedUSD || 0;
+      if (supply < 1e9) continue;
       const price = c.price || 1;
       const d1 = c.circulatingPrevDay?.peggedUSD ? supply - c.circulatingPrevDay.peggedUSD : 0;
       const d7 = c.circulatingPrevWeek?.peggedUSD ? supply - c.circulatingPrevWeek.peggedUSD : 0;
       const d30 = c.circulatingPrevMonth?.peggedUSD ? supply - c.circulatingPrevMonth.peggedUSD : 0;
-      rows.push({ ...meta, id, supply, price, d1, d7, d30 });
+      const type = STABLECOIN_TYPES[c.name] || '其他';
+      rows.push({ name: c.name, ticker: c.symbol, supply, price, d1, d7, d30, type });
     }
     rows.sort((a, b) => b.supply - a.supply);
+    rows = rows.slice(0, 10);
 
     const total = rows.reduce((s, r) => s + r.supply, 0);
     const usdt = rows.find(r => r.ticker === 'USDT');
     const usdc = rows.find(r => r.ticker === 'USDC');
 
-    // KPIs
     document.getElementById('kpi-total').textContent = fmt(total, 1);
-    document.getElementById('kpi-usdt-share').textContent = usdt ? pct(usdt.supply, total) : '—';
-    document.getElementById('kpi-usdc-share').textContent = usdc ? pct(usdc.supply, total) : '—';
+    document.getElementById('kpi-total-sub').textContent = rows.length + ' stablecoins tracked';
+    document.getElementById('kpi-usdt-share').textContent = usdt ? pct(usdt.supply, total) : '--';
+    document.getElementById('kpi-usdc-share').textContent = usdc ? pct(usdc.supply, total) : '--';
     const usdtS = usdt ? usdt.supply/total*100 : 0;
     const usdcS = usdc ? usdc.supply/total*100 : 0;
     document.getElementById('kpi-hhi').textContent = Math.round(usdtS*usdtS + usdcS*usdcS);
     document.getElementById('update-time').textContent = 'Updated: ' + new Date().toLocaleString('zh-CN');
 
-    if (usdc) {
-      document.getElementById('usdc-q1').textContent = (usdc.supply / 1e9).toFixed(1);
-    }
-
-    // Table
     const tbody = document.getElementById('stable-table');
     tbody.innerHTML = rows.map((r, i) => `
       <tr>
-        <td class="center">${i+1}</td>
-        <td><strong>${r.name}</strong> <span style="color:var(--text2)">${r.ticker}</span></td>
-        <td class="num">${fmt(r.supply, 2)}</td>
-        <td class="num">$${r.price.toFixed(4)}</td>
-        <td class="num ${chgClass(r.d1)}">${chgFmt(r.d1)}</td>
-        <td class="num ${chgClass(r.d7)}">${chgFmt(r.d7)}</td>
-        <td class="num ${chgClass(r.d30)}">${chgFmt(r.d30)}</td>
-        <td class="center">${pct(r.supply, total)}</td>
-        <td><span class="tag tag-blue">${r.type}</span></td>
+        <td class="c">${i+1}</td>
+        <td class="l"><strong>${r.name}</strong> <span style="color:var(--text2)">${r.ticker}</span></td>
+        <td class="r">${fmt(r.supply, 2)}</td>
+        <td class="r">$${r.price.toFixed(4)}</td>
+        <td class="r ${chgClass(r.d1)}">${chgFmt(r.d1)}</td>
+        <td class="r ${chgClass(r.d7)}">${chgFmt(r.d7)}</td>
+        <td class="r ${chgClass(r.d30)}">${chgFmt(r.d30)}</td>
+        <td class="r">${pct(r.supply, total)}</td>
+        <td class="c"><span class="tag tag-blue">${r.type}</span></td>
       </tr>
     `).join('');
 
-    // Insight
     const growing = rows.filter(r => r.d30 > 0).sort((a,b) => b.d30 - a.d30);
     const shrinking = rows.filter(r => r.d30 < 0).sort((a,b) => a.d30 - b.d30);
     document.getElementById('insight-box').innerHTML =
       '<strong>30D趋势:</strong><br>' +
       (growing.length ? '<span class="pos">[增长]</span> ' + growing.map(r => `${r.ticker} ${chgFmt(r.d30)} (${(r.d30/r.supply*100).toFixed(1)}%)`).join(' | ') + '<br>' : '') +
       (shrinking.length ? '<span class="neg">[下降]</span> ' + shrinking.map(r => `${r.ticker} ${chgFmt(r.d30)} (${(r.d30/r.supply*100).toFixed(1)}%)`).join(' | ') + '<br>' : '') +
-      '<br><strong>核心结论:</strong> 法币储备型(USDT/USDC/USD1)稳步增长; 合成型(USDe)与支付型(PYUSD)显著收缩';
+      '<br><strong>核心结论:</strong> 法币储备型(USDT/USDC/USD1)稳步增长; 合成型(USDe)大幅收缩; RWA收益型(BUIDL/USYC)是新增长极';
 
   } catch (err) {
     document.getElementById('stable-table').innerHTML =
@@ -413,17 +501,12 @@ async function loadData() {
   }
 }
 
-// ── Yield curve bars ──
 function renderYieldCurve() {
   const yields = [
-    { label: '1M', val: 3.71 },
-    { label: '3M', val: 3.70 },
-    { label: '6M', val: 3.76 },
-    { label: '1Y', val: 3.78 },
-    { label: '2Y', val: 3.95 },
-    { label: '5Y', val: 4.08 },
-    { label: '10Y', val: 4.45 },
-    { label: '30Y', val: 5.02 },
+    { label: '1M', val: 3.71 }, { label: '3M', val: 3.70 },
+    { label: '6M', val: 3.76 }, { label: '1Y', val: 3.78 },
+    { label: '2Y', val: 3.95 }, { label: '5Y', val: 4.08 },
+    { label: '10Y', val: 4.45 }, { label: '30Y', val: 5.02 },
   ];
   const max = 5.5;
   document.getElementById('yield-curve').innerHTML = yields.map(y => `
@@ -435,30 +518,28 @@ function renderYieldCurve() {
   `).join('');
 }
 
-// ── Compare table ──
 function renderCompare() {
   const rows = [
-    ['发行量', '$78.3B (26.7%)', '$189.5B (64.6%)', 'usdt', 'USDT 2.4x; 但USDC在DeFi占比更高'],
-    ['30D增长', '+$775M (+1.0%)', '+$5.4B (+2.9%)', 'usdt', 'USDT增速也更快'],
-    ['2025年收入', '$2.68B', '~$130亿', 'usdt', 'Tether 4.9倍于Circle'],
-    ['利润率', 'RLDC 40% → ~$1.07B', '~90%+ → ~$117亿', 'usdt', 'Coinbase分成吃掉60%利润'],
-    ['员工数', '~700人', '~100人', 'usdt', '人均产出差42倍'],
-    ['监管合规', 'SEC注册, SOC审计', 'BVI注册, 非四大审计', 'usdc', '机构首选Circle'],
-    ['储备透明度', 'BlackRock管理, 100%美国国债', '国债+黄金+BTC(不完全透明)', 'usdc', '100%透明 vs 部分透明'],
-    ['公司治构', 'NYSE上市, SEC报告', '私人公司, BVI注册', 'usdc', '上市=透明度溢价'],
-    ['分销网络', 'Coinbase 50%分成 + CPN', '交易所原生集成', 'usdt', 'Tether无分销费'],
-    ['DeFi渗透', 'Ethereum DeFi首选', 'CEX+新兴市场转账', 'tie', 'USDC=DeFi; USDT=CEX'],
-    ['链上分布', 'ETH>Solana>Base>Arb', 'Tron(58%)>ETH>Solana', 'tie', 'Tron=转账; Solana增长最快'],
-    ['法律风险', 'Drift诉讼(pending)', '多次被罚($4.1B和解)', 'usdc', 'Tether法律尾巴长'],
-    ['可投资性', 'NYSE:CRCL $121.14', '未上市', 'usdc', '唯一纯稳定币股票'],
-    ['CLARITY Act', '禁passive yield; 模式调整', '海外运营, 影响有限', 'usdt', '美国监管主要约束Circle'],
-    ['增长催化', 'Meta+CPN+合规制度', '新兴市场+Tron+避险', 'usdt', 'Tether TAM更大'],
+    ['发行量', '$78.3B (26.7%)', '$189.5B (64.6%)', 'usdt'],
+    ['30D增长', '+$775M (+1.0%)', '+$5.4B (+2.9%)', 'usdt'],
+    ['2025年收入', '$2.68B', '~$130亿', 'usdt'],
+    ['利润率', 'RLDC 40% -> ~$1.07B', '~90%+ -> ~$117亿', 'usdt'],
+    ['员工数', '~700人', '~100人', 'usdt'],
+    ['监管合规', 'SEC注册, SOC审计', 'BVI注册, 非四大审计', 'usdc'],
+    ['储备透明度', 'BlackRock管理, 100%国债', '国债+黄金+BTC(不透明)', 'usdc'],
+    ['公司治构', 'NYSE上市, SEC报告', '私人公司, BVI注册', 'usdc'],
+    ['分销网络', 'Coinbase 50%分成 + CPN', '交易所原生集成', 'usdt'],
+    ['DeFi渗透', 'Ethereum DeFi首选', 'CEX+新兴市场转账', 'tie'],
+    ['链上分布', 'ETH>Solana>Base>Arb', 'Tron(58%)>ETH>Solana', 'tie'],
+    ['法律风险', 'Drift诉讼(pending)', '多次被罚($4.1B和解)', 'usdc'],
+    ['可投资性', 'NYSE: CRCL $121', '未上市', 'usdc'],
+    ['CLARITY Act', '需调整yield模式', '海外运营, 影响有限', 'usdt'],
+    ['增长催化', 'Meta+CPN+合规制度', '新兴市场+Tron+避险', 'usdt'],
   ];
-
   const container = document.getElementById('compare-table');
   container.innerHTML =
     '<div class="compare-row header"><div>维度</div><div>Circle / USDC</div><div>Tether / USDT</div><div>赢家</div></div>' +
-    rows.map(([dim, circle, tether, winner, note]) => `
+    rows.map(([dim, circle, tether, winner]) => `
       <div class="compare-row">
         <div class="dim">${dim}</div>
         <div>${circle}</div>
@@ -468,7 +549,6 @@ function renderCompare() {
     `).join('');
 }
 
-// ── Timeline ──
 function renderTimeline() {
   const events = [
     ['2025-01', 'Tether全年利润$130亿, 超高盛', '财务', '★★★', 'red'],
@@ -478,21 +558,22 @@ function renderTimeline() {
     ['2025-08', 'Ethena USDe峰值$5.9B + sUSDe 25% APY', '竞争', '★★', 'yellow'],
     ['2025-09', 'WLFI发行USD1 (Trump关联)', '竞争', '★★', 'yellow'],
     ['2025-Q4', 'USDC季度末$75.3B (QoQ +13.7%)', '数据', '★★', 'yellow'],
-    ['2025-12', 'MakerDAO → Sky品牌重塑, DAI→USDS', '竞争', '★', 'blue'],
+    ['2025-12', 'MakerDAO -> Sky品牌重塑, DAI->USDS', '竞争', '★', 'blue'],
+    ['2026-01', 'BlackRock BUIDL突破$2.9B, RWA赛道爆发', '竞争', '★★', 'yellow'],
     ['2026-02', 'Circle CPN年化$5.7B', '业务', '★★', 'yellow'],
-    ['2026-03', 'CRCL $68→$94 (+38%单月)', '股价', '★★', 'yellow'],
+    ['2026-03', 'CRCL $68->$94 (+38%单月)', '股价', '★★', 'yellow'],
+    ['2026-03-16', 'Circle披露USDC $79.2B (Q1快照)', '数据', '★★', 'yellow'],
     ['2026-04-29', 'FOMC hold 3.50-3.75% (8-4异常分裂)', '宏观', '★★', 'yellow'],
     ['2026-04-29', 'Meta开始USDC创作者支付', '合作', '★★', 'yellow'],
     ['2026-05-01', 'Circle在Solana铸造$750M USDC', '链上', '★★', 'yellow'],
-    ['2026-05-02', '★ CLARITY Act妥协案发布', '监管', '★★★', 'red'],
-    ['2026-05-04', '★ CRCL暴涨+18%至$121.14', '股价', '★★★', 'red'],
+    ['2026-05-02', 'CLARITY Act妥协案发布', '监管', '★★★', 'red'],
+    ['2026-05-04', 'CRCL暴涨+18%至$121.14', '股价', '★★★', 'red'],
     ['2026-05-11', '[即将] Circle Q1财报 + Senate markup', '财报', '★★★', 'red'],
     ['2026-05-15', '[即将] Powell卸任Fed主席', '宏观', '★', 'blue'],
     ['2026-06-17', '[即将] 6月FOMC', '宏观', '★★', 'yellow'],
     ['2026-08', '[即将] Coinbase合约续期窗口', '业务', '★★★', 'red'],
     ['2026-H2', '[即将] CLARITY Act众议院投票', '监管', '★★★', 'red'],
   ];
-
   document.getElementById('timeline-list').innerHTML = events.map(([date, event, cat, level, color]) => `
     <div class="timeline-item">
       <div class="tl-date">${date}</div>
@@ -503,7 +584,6 @@ function renderTimeline() {
   `).join('');
 }
 
-// ── Init ──
 loadData();
 renderYieldCurve();
 renderCompare();
